@@ -30,13 +30,13 @@ function vote(uint _candidateId, uint nonce) public {
 
     require(!hasVoted[msg.sender], "Already voted.");
     
-    //require(nonce < 1000000, "Nonce value too large");
+    require(nonce < 1000000, "Nonce value too large");
     
     require(_candidateId > 0 && _candidateId <= candidatesCount, "Invalid candidate");
 
     bytes32 hash = keccak256(abi.encodePacked(msg.sender, _candidateId, nonce));
     
-    //require(!usedNonces[hash], "Nonce reused");
+    require(!usedNonces[hash], "Nonce reused");
     
     require(uint256(hash) < type(uint256).max / (10 ** difficulty), "Invalid PoW");
 
